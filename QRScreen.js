@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 
-const QRScreen = ({ navigation }) => { // Alterado o nome da propriedade para navigation
+const QRScreen = ({ route, navigation }) => {
+  //Receber o nome do aluno do 'LoginScreen'
+  const { nomeAluno } = route.params;
+   // Alterado o nome da propriedade para navigation
   const [logoImage] = useState(require('./Imagens/Logo_Etec.png'));
   const [qrCodeImage] = useState(require('./Imagens/qrcode.jpg'));
 
@@ -9,8 +12,9 @@ const QRScreen = ({ navigation }) => { // Alterado o nome da propriedade para na
     Keyboard.dismiss();
   };
 
+  // Navega de volta para a tela anterior (LoginScreen)
   const handleLogout = () => {
-    navigation.goBack(); // Navega de volta para a tela anterior (LoginScreen)
+    navigation.goBack(); 
   };
 
   return (
@@ -22,6 +26,7 @@ const QRScreen = ({ navigation }) => { // Alterado o nome da propriedade para na
             style={styles.logo}
           />
         </View>
+        <Text style={styles.nomeAluno}>{nomeAluno}</Text>
         {/* Exibir imagem do QRCode */}
         <Image
           style={styles.qrCodeImage}
@@ -69,6 +74,11 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 18,
+  },
+  nomeAluno: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
   },
 });
 
