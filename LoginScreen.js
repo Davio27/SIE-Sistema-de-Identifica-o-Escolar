@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Alert  } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import LeitorScreen from './LeitorScreen'
+
+const rmList = [
+  '20240289','11111111', '20240152', '20240104', '20240476', '190689', '20230704', '20240122', '20240327', '20240202', '20240218', '180568', '20200996', '20240173', '20240063', '20210794', '20240204', '20240376', '20240099', '20240333', '20240408', '20240509', '20240487', '20240410', '20240231', '20240282', '20240210', '20240136', '20240255', '20240179', '20240348', '20240389', '20240206', '20240106', '20240230', '20210803', '20230660', '20230586', '20230588', '20230643', '20230719', '20230692', '20210951', '20230108', '20240097', '20240250', '20240062', '00366', '20240234', '20240285', '20240484', '20240266', '20240142', '20240490', '20240127', '20240003', '20240521', '20230815', '20240162', '20230772', '20240395', '20240236', '20240252', '20220720', '20240300', '20240292', '20240421', '20240307', '20240245', '20240367', '20240154', '20240235', '20230796', '20240205', '20240140', '20240143', '20230697', '20230346', '20210804', '20230752', '20230621', '20230617', '20230583', '20230454', '20230755', '20230814', '20230797', '20230787', '20230624', '20230813', '20230739', '20230613', '20230611', '20200084', '20230640', '20230207', '20230155', '181132', '20230337', '20230574', '20230109', '20200489', '20220615', '20230203', '20230497', '20230407', '20230309', '20230115', '20230307', '20230234', '20230021', '20230369'
+];
 
 const LoginScreen = () => {
   const [nomeAluno, setNomeAluno] = useState('');
   const [rm, setRM] = useState('');
   const [dataNascimento, setDataNascimento] = useState('');
+  
 
   const formatarDataNascimento = (text) => {
     const cleaned = text.replace(/[^0-9]/g, '');
@@ -22,15 +28,20 @@ const LoginScreen = () => {
   const navigation = useNavigation();
 
   const handleLogin = () => {
-    if (nomeAluno && rm && dataNascimento) { // Verifica se todos os campos estão preenchidos
-      console.log('Nome do Aluno:', nomeAluno);
-      console.log('RM/RP:', rm);
-      console.log('Data de Nascimento:', dataNascimento);
-
-      navigation.navigate('QRScreen', { rm, dataNascimento });
+    if (rm === '11111111') {
+      navigation.navigate('LeitorScreen', { nomeUsuario: nomeAluno }); // Navegar para QRScanner se RM for '11111111'
+      return;
+    }
+    if (nomeAluno && rm && dataNascimento) {
+      if (rmList.includes(rm)) {
+        console.log('Acesso permitido para RM:', rm);
+        // Passando nomeAluno como propriedade
+        navigation.navigate('QRScreen', { rm, dataNascimento, nomeAluno }); 
+      } else {
+        Alert.alert('Acesso negado', 'RM inválido. Por favor, verifique e tente novamente.');
+      }
     } else {
-      // Mostra uma mensagem de erro caso algum campo esteja vazio
-      alert('Por favor, preencha todos os campos.');
+      Alert.alert('Campos vazios', 'Por favor, preencha todos os campos.');
     }
   };
 
