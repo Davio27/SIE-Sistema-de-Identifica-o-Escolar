@@ -91,7 +91,7 @@ O SIE permite a criação, leitura, atualização e exclusão de alunos cadastra
 
 ## Autor
 
-Este projeto esta sendo desenvolvido por [Dávio](https://github.com/seu-usuario), [Rafael](https://github.com/RafaNgk), [Matheus](https://github.com/MatheusPaula02) e [Danilo](https://github.com/daniloabrantes)
+Este projeto esta sendo desenvolvido por [Dávio](https://github.com/seu-usuario), [Danilo](https://github.com/daniloabrantes), [Matheus](https://github.com/MatheusPaula02) e [Rafael](https://github.com/RafaNgk)
 
 ## Contribuições
 
@@ -99,4 +99,4 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou env
 
 ## Licença
 
-Este projeto está licenciado sob a [MIT License](https://opensource.org/licenses/MIT).
+Este projeto está licenciado sob a [MIT License](https://opensource.org/licenses/MIT) e esta sobre direitos autorais de nossa equipe, sendo reconhecido e registrado em cartório. Por Favor, não plagie, copie ou use esse código sem a nossa permissão
