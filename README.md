@@ -88,6 +88,7 @@ O SIE permite a criação, leitura, atualização e exclusão de alunos cadastra
 - AsyncStorage
 - React Native Vector Icons
 - React Native Picker
+- React Native Qrcode
 
 ## Autor
 
