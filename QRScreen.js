@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import QRCode from 'react-native-qrcode-svg'; // Importe a biblioteca para gerar QR Code
 
 const QRScreen = ({ route, navigation }) => {
   //Receber o nome do aluno do 'LoginScreen'
   const { nomeAluno } = route.params;
+  const { rm } = route.params;
    // Alterado o nome da propriedade para navigation
   const [logoImage] = useState(require('./Imagens/Logo_Etec.png'));
-  const [qrCodeImage] = useState(require('./Imagens/qrcode.jpg'));
+  const [rmList] = useState([ rm
+  ]);
 
   const dismissKeyboard = () => { 
     Keyboard.dismiss();
@@ -27,11 +30,16 @@ const QRScreen = ({ route, navigation }) => {
           />
         </View>
         <Text style={styles.nomeAluno}>{nomeAluno}</Text>
-        {/* Exibir imagem do QRCode */}
-        <Image
-          style={styles.qrCodeImage}
-          source={qrCodeImage}
-        />
+        {/* Gerar um QR Code com base no RM */}
+        {rmList.map((rm, index) => (
+          <View key={index}>
+            <QRCode
+              value={rm} // RM é usado como valor do QR Code
+              size={300}
+              style={styles.qrCode}
+            />
+          </View>
+        ))}
         <TouchableOpacity onPress={handleLogout} style={styles.button}>
           <Text style={styles.buttonText}>Sair</Text>
         </TouchableOpacity>
@@ -56,7 +64,7 @@ const styles = StyleSheet.create({
     height: 200,
     resizeMode: 'contain',
   },
-  qrCodeImage: {
+  qrCode: {
     width: 300,
     height: 300,
     marginBottom: 90,
@@ -68,7 +76,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
-    marginTop: 15,
+    marginTop: 35,
     alignItems: 'center'
   },
   buttonText: {
@@ -79,6 +87,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+  },
+  rmText: {
+    fontSize: 18,
+    marginBottom: 10,
   },
 });
 
