@@ -54,6 +54,8 @@ const LeitorScreen = ({ route }) => {
     navigation.goBack();
   };
 
+  
+
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     console.log(`Bar code with type ${type} and data ${data} has been scanned!`);
