@@ -1,10 +1,11 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import LoginScreen from './LoginScreen';
+import MainScreen from './MainScreen';
 import QRScreen from './QRScreen';
 import LeitorScreen from './LeitorScreen'
 import CrudScreen from './CrudScreen'
+import LoginScreen from './LoginScreen'
 
 const Stack = createStackNavigator();
 
@@ -13,8 +14,8 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen 
-          name="Login" 
-          component={LoginScreen} 
+          name="MainScreen" 
+          component={MainScreen} 
           options={{ headerShown: false }}
         />
         <Stack.Screen 
@@ -30,6 +31,11 @@ const App = () => {
         <Stack.Screen 
           name="CrudScreen" 
           component={CrudScreen} 
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="LoginScreen" 
+          component={LoginScreen} 
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
