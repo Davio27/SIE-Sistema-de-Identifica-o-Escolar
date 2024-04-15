@@ -53,7 +53,7 @@ const LoginScreen = () => {
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
       <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
           <Text >
-                <MaterialIcons name="keyboard-arrow-left" size={54} color="white" />
+                <MaterialIcons name="keyboard-arrow-left" size={54} color="#B22222" />
           </Text>
       </TouchableOpacity>
         <View style={styles.logoContainer}>
