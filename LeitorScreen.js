@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text, Button, Animated } from 'react-native';
 import { Camera } from 'expo-camera';
 import { useNavigation } from '@react-navigation/native';
-
+import { MaterialIcons } from '@expo/vector-icons';
+import { BlurView } from 'expo-blur';
 
 const rmList = [
   '20240289', '20240152', '20240104', '20240476', '190689', '20230704', '20240122', '20240327', '20240202',
@@ -18,6 +19,13 @@ const rmList = [
   '20230109', '20200489', '20220615', '20230203', '20230497', '20230407', '20230309', '20230115', '20230307', '20230234',
   '20230021', '20230369'
 ];
+
+const CameraQRCode = ({ onBarCodeScanned }) => (
+  <Camera
+    onBarCodeScanned={onBarCodeScanned}
+    style={StyleSheet.absoluteFillObject}
+  />
+);
 
 
 const LeitorScreen = ({ route }) => {
@@ -37,83 +45,102 @@ const LeitorScreen = ({ route }) => {
     getCameraPermissions();
   }, []);
 
+  // animação
   useEffect(() => {
-    if (accessGranted !== null) {
-      Animated.timing(
-        fadeAnim,
-        {
-          toValue: 0,
-          duration: 4000,
-          useNativeDriver: true,
-        }
-      ).start();
-    }
-  }, [accessGranted]);
+    Animated.timing(
+      fadeAnim,
+      {
+        toValue: 1,
+        duration: 4000,
+        useNativeDriver: true,
+      }
+    ).start();
+  }, [scanned, fadeAnim]);
 
-  const handleSair = () => {
-    navigation.goBack();
-  };
 
-  
 
   const handleBarCodeScanned = ({ type, data }) => {
-    setScanned(true);
-    console.log(`Bar code with type ${type} and data ${data} has been scanned!`);
-    
-    // Verifica se o RM está na lista
-    if (rmList.includes(data)) {
-      setAccessGranted(true);
-    } else {
-      setAccessGranted(false);
+    if (!scanned) {
+      setScanned(true);
+      console.log(`${data} `);
+      
+      // Verifica se o RM está na lista
+      if (rmList.includes(data)) {
+        setAccessGranted(true);
+      } else {
+        setAccessGranted(false);
+      }
+  
+      // Aguarda 4 segundos antes de permitir outra leitura
+      setTimeout(() => {
+        setScanned(false);
+      }, 4000);
     }
   };
 
+  const startScanning = () => {
+    setScanned(false); 
+  };
+
+  useEffect(() => {
+    startScanning();
+  }, []);
+
   if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
+    return <Text>Solicitando permissão da câmera</Text>;
   }
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+    return <Text>Sem acesso à câmera</Text>;
   }
 
-  let accessMessage = '';
-  let accessMessageColor = 'yellow';
-
-  if (scanned) {
-    if (accessGranted === true) {
+  if (accessGranted == true) {
       accessMessage = 'Acesso permitido';
       accessMessageColor = 'green';
-    } else if (accessGranted === false) {
+      accessIcon = <MaterialIcons name="check-circle" size={50} color="green" />;
+  } else if (accessGranted == false) {
       accessMessage = 'Acesso negado, RM não registrado';
       accessMessageColor = 'red';
-    }
+      accessIcon = <MaterialIcons name="cancel" size={50} color="red" />;
   }
+
+
 
   return (
     <View style={styles.container}>
-      <Camera
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={StyleSheet.absoluteFillObject}
-      />
-      <View style={styles.overlay}>
-        <Text style={styles.text}>Vigilante:</Text>
-        <Text style={styles.text}>{nomeUsuario}</Text>
-        <View style={styles.qrCodeContainer}>
-          <View style={styles.qrCodeFrame} />
-        </View>
-        <TouchableOpacity style={styles.button} onPress={handleSair}>
-          <Text style={styles.buttonText}>Sair</Text>
-        </TouchableOpacity>
-        {scanned && accessGranted !== null && (
+        <View style={styles.overlay}>
+          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+            <MaterialIcons name="keyboard-arrow-left" size={54} color="#B22222" />
+          </TouchableOpacity>
+
+          <Text style={styles.text}>Aponte a câmera para o QR Code</Text>
+          <Text style={styles.text}>Vigilante: {nomeUsuario}</Text>
+
+          <View style={styles.qrCodeContainer}>
+            <View style={styles.qrCodeFrame}>
+              <CameraQRCode onBarCodeScanned={scanned ? undefined : handleBarCodeScanned} />
+            </View>
+          </View>
+
+          <Text style={styles.text2}>Posicione o QR Code aqui</Text>
+
+          {scanned && accessGranted !== null && (
             <Animated.Text
-            style={[
-              styles.accessMessage,
-              { color: accessMessageColor, opacity: fadeAnim }
-            ]}
-          >
-            {accessMessage}
-          </Animated.Text> 
+              style={[styles.accessMessage,
+                { color: accessMessageColor, opacity: fadeAnim }]}
+            >
+              {accessIcon}
+            </Animated.Text>
           )}
-      </View>
+          {scanned && accessGranted !== null && (
+            <Animated.Text
+              style={[styles.accessMessageicone,
+                { color: accessMessageColor, opacity: fadeAnim }]}
+            >
+              {accessMessage}
+            </Animated.Text>
+          )}
+
+        </View>
     </View>
   );
 };
@@ -126,42 +153,55 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'transparent',
+    backgroundColor: '#C0C0C0',
   },
   text: {
-    color: 'white',
+    color: 'black',
     fontWeight: 'bold',
     fontSize: 20,
     marginBottom: 20,
   },
-  button: {
-    width: 175,
-    backgroundColor: '#B22222',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    marginTop: 75,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 18,
-    textAlign: 'center',
+  text2: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 20,
   },
   qrCodeContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 60,
   },
   qrCodeFrame: {
     width: 300,
     height: 300,
-    borderWidth: 2,
+    borderWidth: 10,
     borderColor: 'white',
+    borderRadius: 70,
+    overflow: 'hidden',
   },
   accessMessage: {
+    backgroundColor: 'transparent',
     fontSize: 26,
-    marginTop: 50,
+    marginTop: 10,
     textAlign: 'center',
+    zIndex: 100,
+  },
+  accessMessageicone: {
+    width: 200,
+    height: 100,
+    backgroundColor: 'transparent',
+    fontSize: 26,
+    textAlign: 'center',
+    zIndex: 100,
+  },
+  backButton: {
+    position: 'absolute',
+    top: 40,
+    left: 15,
+    width: 60,
+    height: 70,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
