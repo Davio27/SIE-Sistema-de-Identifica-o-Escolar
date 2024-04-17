@@ -1,6 +1,6 @@
 # SIE - Sistema de Identificação Escolar
 
-O SIE é um aplicativo desenvolvido em React Native para identificação de alunos em instituições de ensino. Ele permite aos usuários realizar login, gerar um QR-ID para acesso, ler QR codes através da câmera do dispositivo e realizar operações CRUD (Create, Read, Update, Delete) sobre uma lista de alunos.
+O SIE é um aplicativo desenvolvido em React Native pelo Expo para identificação de alunos nas extensões de ensino Etec Centro Paula Sousa. Ele permite aos usuários realizar login, gerar um QR-ID para acesso, ler QR codes através da câmera do dispositivo e realizar operações CRUD (Create, Read, Update, Delete) sobre uma lista de alunos.
 
 ## Instalação
 
@@ -14,7 +14,7 @@ Para utilizar o aplicativo SIE, siga os passos abaixo:
 ### Passo 1: Clonar o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/sie.git
+git clone https://github.com/sDavio27/sie.git
 ```
 
 ### Passo 2: Instalar as dependências
