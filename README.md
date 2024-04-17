@@ -30,7 +30,7 @@ npm install
 expo start
 ```
 
-Isso abrirá uma página no seu navegador com um QR code. Use o aplicativo Expo Go no seu dispositivo móvel para escanear o QR code e abrir o aplicativo.
+Isso abrirá uma página no seu cmd com um QR code. Use o aplicativo Expo Go no seu dispositivo móvel para escanear o QR code e abrir o aplicativo.
 
 ## Como usar o Expo
 
@@ -38,17 +38,14 @@ O Expo é uma plataforma de código aberto para criar aplicativos nativos do iOS
 
 Para criar um projeto React Native usando o Expo, siga estes passos:
 
-### Passo 1: Instalar o Expo CLI
+### Passo 1: Criar um novo projeto
 
 ```bash
-npm install -g expo-cli
+npx create-expo-app my-app
 ```
 
-### Passo 2: Criar um novo projeto
+### Passo 2: no "my-app" substitua pelo nome do projeto que voce quer
 
-```bash
-expo init nome-do-projeto
-```
 
 Siga as instruções para escolher um template de projeto e configurar as dependências.
 
@@ -59,36 +56,74 @@ cd nome-do-projeto
 expo start
 ```
 
-Isso abrirá o Metro Bundler no seu navegador com um QR code. Use o aplicativo Expo Go no seu dispositivo móvel para escanear o QR code e visualizar o aplicativo.
+Isso abrirá o Metro Bundler no seu cmd com um QR code. Use o aplicativo Expo Go no seu dispositivo móvel para escanear o QR code e visualizar o aplicativo.
 
 ## Funcionalidades do SIE
 
-### 1. Login
+### 1. Main
 
-O usuário pode inserir seu nome, RM/RP e data de nascimento para acessar o sistema. Além disso, há uma funcionalidade específica para acesso de vigilantes.
+O usuário pode inserir seu nome, RM/RP e data de nascimento para a geração do QR-ID.
 
 ### 2. Geração de QR-ID
 
 Após o login, o usuário pode gerar um QR-ID para acesso às dependências da instituição de ensino.
 
-### 3. Leitura de QR Code
+### 3. Login
+
+O usuário insere seu nome, registro e data de nascimento para a altenticação. O sistema identifica se o usuário é o vigilante ou o admin e navega para tela especifica.
+
+### 4. Leitura de QR Code
 
 O aplicativo possui uma tela de leitura de QR code que utiliza a câmera do dispositivo para ler e interpretar os códigos.
 
-### 4. CRUD de Alunos
+### 5. CRUD de Alunos
 
 O SIE permite a criação, leitura, atualização e exclusão de alunos cadastrados. Os dados dos alunos são armazenados localmente no dispositivo usando o AsyncStorage.
 
 ## Bibliotecas Utilizadas
 
 - React Native
-- React Navigation
+  ```bash
+    Já vem instalado por padrão
+  ```
+- React Navigation/native
+  ```bash
+    npm install @react-navigation/native
+  ```
+- React Navigation/stack
+  ```bash
+    npm install @react-navigation/stack
+  ```
 - Expo Camera
-- Expo BarCodeScanner
+  ```bash
+    expo install expo-camera
+  ```
 - AsyncStorage
+  ```bash
+    npm install @react-native-async-storage/async-storage
+  ```
+- Link as dependências (apenas para Android):
+  Se você estiver desenvolvendo para Android, será necessário linkar as dependências após       
+  instalar o AsyncStorage.
+  ```bash
+    npx pod-install
+  ```
 - React Native Vector Icons
+  ```bash
+    expo install @expo/vector-icons
+  ```
 - React Native Picker
+  ```bash
+    npm install @react-native-picker/picker
+  ```
 - React Native Qrcode
+  ```bash
+    npm install react-native-qrcode-svg
+  ```
+- React Native Gesture Handler
+  ```bash
+    npm install react-native-gesture-handler
+  ```
 
 ## Autor
 
