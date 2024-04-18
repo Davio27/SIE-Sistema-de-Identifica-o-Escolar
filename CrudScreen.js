@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, FlatList, Modal, Button, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, FlatList, Modal, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Picker } from 'react-native';
+import CustomPicker from './CustomPicker';
 
 
-// Para nesse
+
+
 const CrudScreen = () => {
   const navigation = useNavigation(); // Obtendo o objeto de navegação
 
@@ -44,12 +45,17 @@ const CrudScreen = () => {
     try {
       await AsyncStorage.setItem('@alunos', JSON.stringify(alunos));
     } catch (e) {
-      console.error('Erro ao salvar alunos no AsyncStorage:', e);
+      console.error('Erro ao salvar aluno / Professor', e);
     }
   };
 
   const adicionarAluno = () => {
-    if (editandoAluno) {
+    // Verifica se algum campo está vazio
+    if (!novoAluno.rm || !novoAluno.tipo || !novoAluno.semestre || !novoAluno.ano) {
+    alert('Por favor, preencha todos os campos.');
+    return;}
+
+    else if (editandoAluno) {
 
       const rmExistente = alunos.some((aluno, index) => index !== indexDoAlunoEditado && aluno.rm === novoAluno.rm);
         if (rmExistente) {
@@ -104,7 +110,7 @@ const CrudScreen = () => {
   };
 // 
 
-const excluirAluno = (index) => {
+const excluirAluno = ({ item, index }) => {
   // Exibir um alerta de confirmação antes de excluir o aluno
   Alert.alert(
     'Confirmar exclusão',
@@ -169,7 +175,7 @@ const excluirAluno = (index) => {
       <FlatList
         data={alunos}
         renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(item) => item.rm.toString()} // Utiliza o rm como chave
       />
 
       <TouchableOpacity style={styles.addButton} onPress={() => setModalVisible(true)}>
@@ -194,25 +200,34 @@ const excluirAluno = (index) => {
           <View style={styles.modalContent}>
             <TextInput
               style={styles.input}
-              placeholder="RM/RP"
+              placeholder="  RM / RP"
               placeholderTextColor="black"
               value={novoAluno.rm}
               onChangeText={text => setNovoAluno({ ...novoAluno, rm: text })}
+              keyboardType="numeric"
             />
-            <TextInput
-              style={styles.input}
-              placeholder="Tipo (Aluno ou Professor)"
-              placeholderTextColor="black"
-              value={novoAluno.tipo}
-              onChangeText={text => setNovoAluno({ ...novoAluno, tipo: text })}
+            
+             <CustomPicker
+              options={[
+                { label: 'Aluno', value: 'Aluno' },
+                { label: 'Professor', value: 'Professor' }
+              ]}
+              selectedValue={novoAluno.tipo}
+              onValueChange={value => setNovoAluno({ ...novoAluno, tipo: value })}
+              placeholderText="Aluno / Professor"
             />
-            <TextInput
-              style={styles.input}
-              placeholder="Semestre"
-              placeholderTextColor="black"
-              value={novoAluno.semestre}
-              onChangeText={text => setNovoAluno({ ...novoAluno, semestre: text })}
+
+            
+            <CustomPicker
+              options={[
+                { label: '1º Semestre', value: '01' },
+                { label: '2º Semestre', value: '02' }
+              ]}
+              selectedValue={novoAluno.semestre}
+              onValueChange={value => setNovoAluno({ ...novoAluno, semestre: value })}
+              placeholderText="Semestre"
             />
+
             <TextInput
               style={styles.input}
               placeholder="Ano Letivo"
@@ -224,6 +239,7 @@ const excluirAluno = (index) => {
                   setNovoAluno({ ...novoAluno, ano: text });
                 }
               }}
+              keyboardType="numeric"
             />
             <TouchableOpacity onPress={adicionarAluno} style={styles.button}>
               <Text style={styles.buttonText}>{editandoAluno ? 'Salvar Alterações' : 'Adicionar Aluno'}</Text>
@@ -316,22 +332,29 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
+    backgroundColor: 'transparent',
+    textAlign: 'left',
+  },
+  pickerItem: {
+    textAlign: 'left',
+    height: 40,
+    fontSize: 15,
+    backgroundColor: 'transparent',
+  },
+  button: {
+    backgroundColor: '#B22222',
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10, // Espaçamento superior
+    marginBottom: 5, // Espaçamento inferior
+    alignSelf: 'stretch', // Estende o botão para preencher a largura do componente pai
   },
   
-    button: {
-      backgroundColor: '#B22222',
-      padding: 10,
-      borderRadius: 5,
-      marginTop: 10, // Espaçamento superior
-      marginBottom: 5, // Espaçamento inferior
-      alignSelf: 'stretch', // Estende o botão para preencher a largura do componente pai
-    },
-  
-    buttonText: {
-      color: '#FFFFFF',
-      fontSize: 16,
-      textAlign: 'center', // Alinha o texto ao centro do botão
-    },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    textAlign: 'center', // Alinha o texto ao centro do botão
+  },
   
 });
 
