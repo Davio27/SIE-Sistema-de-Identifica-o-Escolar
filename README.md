@@ -112,10 +112,6 @@ O SIE permite a criação, leitura, atualização e exclusão de alunos cadastra
   ```bash
     expo install @expo/vector-icons
   ```
-- React Native Picker
-  ```bash
-    npm install @react-native-picker/picker
-  ```
 - React Native Qrcode
   ```bash
     npm install react-native-qrcode-svg
