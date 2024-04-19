@@ -239,7 +239,6 @@ const excluirAluno = ({ item, index }) => {
                   setNovoAluno({ ...novoAluno, ano: text });
                 }
               }}
-              keyboardType="numeric"
             />
             <TouchableOpacity onPress={adicionarAluno} style={styles.button}>
               <Text style={styles.buttonText}>{editandoAluno ? 'Salvar Alterações' : 'Adicionar Aluno'}</Text>
