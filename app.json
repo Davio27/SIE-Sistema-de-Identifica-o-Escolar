@@ -4,7 +4,7 @@
     "slug": "etecacesso",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./Imagens/iconelogo.jpg",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/SplashScreen.gif",
@@ -19,7 +19,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./Imagens/iconelogo.jpg",
         "backgroundColor": "#C0C0C0"
       }
     },
