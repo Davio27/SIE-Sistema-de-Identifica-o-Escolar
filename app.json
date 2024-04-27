@@ -4,10 +4,10 @@
     "slug": "etecacesso",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./Imagens/iconelogo.jpg",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/SplashScreen.gif",
+      "image": "./assets/splashicon.png",
       "resizeMode": "contain",
       "backgroundColor": "#C0C0C0"
     },
@@ -15,16 +15,32 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.davio09.etecacesso"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./Imagens/iconelogo.jpg",
+        "foregroundImage": "./assets/adaptiveicon.png",
         "backgroundColor": "#C0C0C0"
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.davio09.etecacesso"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Permitir que SIE acesse sua câmera",
+          "microphonePermission": "Permitir que SIE acesse ao seu microfone",
+          "recordAudioAndroid": true
+        }
+      ]
+    ]
   }
 }
