@@ -1,35 +1,26 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Alert, Modal } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Alert, Modal, Linking } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 
 const MainScreen = () => {
   const [nomeAluno, setNomeAluno] = useState('');
   const [rm, setRM] = useState('');
-  const [dataNascimento, setDataNascimento] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
-  
-  const formatarDataNascimento = (text) => {
-    const cleaned = text.replace(/[^0-9]/g, '');
-
-    if (cleaned.length <= 2) {
-      return cleaned;
-    } else if (cleaned.length <= 4) {
-      return `${cleaned.slice(0, 2)}/${cleaned.slice(2)}`;
-    } else {
-      return `${cleaned.slice(0, 2)}/${cleaned.slice(2, 4)}/${cleaned.slice(4, 8)}`;
-    }
-  };
 
 
 
   const handleLogin = () => {
-    if (nomeAluno && rm && dataNascimento) {
-        navigation.navigate('QRScreen', { rm, dataNascimento, nomeAluno }); 
+    if (nomeAluno && rm) {
+        navigation.navigate('QRScreen', { rm, nomeAluno }); 
       }  else {
       Alert.alert('Campos vazios', 'Por favor, preencha todos os campos.');
     }
+  };
+
+  const handleTerms = () => {
+    Linking.openURL('https://exemplo.com/termos-de-uso');
   };
 
   const dismissKeyboard = () => {
@@ -53,6 +44,7 @@ const MainScreen = () => {
       <TouchableOpacity
         style={styles.menuOption}
         onPress={() => {
+          handleTerms();
           setModalVisible(false);
           // Navegar para a tela de termos de uso
         }}
@@ -113,13 +105,13 @@ const MainScreen = () => {
           onChangeText={text => setRM(text.replace(/[^0-9]/g, ''))}
           keyboardType="numeric"
         />
-        <TextInput
+        {/* <TextInput
           style={styles.input}
           placeholder="Data de Nascimento (DD/MM/AAAA)"
           value={formatarDataNascimento(dataNascimento)}
           onChangeText={text => setDataNascimento(text)}
           keyboardType="numeric"
-        />
+        /> */}
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Gerar QR-ID</Text>
         </TouchableOpacity>
@@ -176,7 +168,7 @@ const styles = StyleSheet.create({
   },
   menuIcon: {
     position: 'absolute',
-    top: 40,
+    top: 55,
     right: 15,
     width: 40,
     height: 40,
