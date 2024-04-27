@@ -34,12 +34,31 @@ const CrudScreen = () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@alunos');
       if (jsonValue !== null) {
-        setAlunos(JSON.parse(jsonValue));
+        let alunosData = JSON.parse(jsonValue);
+        
+        // Ordenar os alunos por semestre e ano
+        alunosData.sort((a, b) => {
+          const semestreA = parseInt(a.semestre);
+          const semestreB = parseInt(b.semestre);
+          const anoA = parseInt(a.ano);
+          const anoB = parseInt(b.ano);
+  
+          // Ordenar primeiro pelo ano e depois pelo semestre
+          if (anoA === anoB) {
+            return semestreA - semestreB;
+          } else {
+            return anoA - anoB;
+          }
+        });
+  
+        // Atualizar o estado dos alunos com a lista ordenada
+        setAlunos(alunosData);
       }
     } catch (e) {
-      console.error('Erro ao carregar alunos do AsyncStorage:', e);
+      console.error('Erro ao carregar alunos', e);
     }
   };
+  
 
   const saveAlunos = async () => {
     try {
@@ -49,19 +68,22 @@ const CrudScreen = () => {
     }
   };
 
+  // Função Adicionar novo aluno/Fazer alteração
   const adicionarAluno = () => {
+
     // Verifica se algum campo está vazio
     if (!novoAluno.rm || !novoAluno.tipo || !novoAluno.semestre || !novoAluno.ano) {
     alert('Por favor, preencha todos os campos.');
-    return;}
+    return;
+    }
 
     else if (editandoAluno) {
-
       const rmExistente = alunos.some((aluno, index) => index !== indexDoAlunoEditado && aluno.rm === novoAluno.rm);
         if (rmExistente) {
           alert('O RM já está cadastrado para outro aluno.');
-        return;
-      }
+          return;
+        }
+
       // Se estivermos editando, substituímos as informações do aluno na lista
       const novosAlunos = [...alunos];
       novosAlunos[indexDoAlunoEditado] = novoAluno;
@@ -69,9 +91,10 @@ const CrudScreen = () => {
       saveAlunos();
       setEditandoAluno(false); // Resetamos o estado de edição
       setIndexDoAlunoEditado(null); // Resetar o índice do aluno editado
-    } else {
+      } 
+      else {
         // Verifica se o RM já existe na lista de alunos
-    const alunoExistente = alunos.find(aluno => aluno.rm === novoAluno.rm);
+        const alunoExistente = alunos.find(aluno => aluno.rm === novoAluno.rm);
   
     if (alunoExistente) {
       // Se o aluno já existir, exibe um alerta
@@ -82,8 +105,12 @@ const CrudScreen = () => {
       setAlunos([...alunos, novoAluno]);
       saveAlunos();
     }
-    setNovoAluno({ rm: '', tipo: '', semestre: '', ano: '' });
     setModalVisible(false);
+    
+  };
+
+  const resetNovoAluno = () => {
+    setNovoAluno({ rm: '', tipo: '', semestre: '', ano: '' });
   };
 // 
 
@@ -122,15 +149,17 @@ const excluirAluno = ({ item, index }) => {
       },
       {
         text: 'Confirmar',
-        onPress: () => {
-          const novosAlunos = [...alunos];
-          novosAlunos.splice(index, 1);
-          setAlunos(novosAlunos);
-          saveAlunos();
-        },
+        onPress: () => confirmarExclusao(index),
       },
     ]
   );
+};
+
+const confirmarExclusao = (index) => {
+  const novosAlunos = [...alunos];
+  novosAlunos.splice(index, 1); // Remove o aluno da lista
+  setAlunos(novosAlunos); // Atualiza o estado de alunos com a lista sem o aluno excluído
+  saveAlunos(); // Salva a lista atualizada no AsyncStorage
 };
 
   const renderItem = ({ item, index }) => (
@@ -148,7 +177,7 @@ const excluirAluno = ({ item, index }) => {
         <TouchableOpacity onPress={() => editarAluno(index)}>
           <Icon name="pencil" size={20} color="#000" style={styles.icon} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => excluirAluno(index)}>
+        <TouchableOpacity onPress={() =>{excluirAluno({item, index}); resetNovoAluno(); }}>
           <Icon name="trash" size={20} color="#FF0000" style={styles.icon} />
         </TouchableOpacity>
       </View>
@@ -244,7 +273,7 @@ const excluirAluno = ({ item, index }) => {
               <Text style={styles.buttonText}>{editandoAluno ? 'Salvar Alterações' : 'Adicionar Aluno'}</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.button}>
+            <TouchableOpacity onPress={() =>{resetNovoAluno(); setModalVisible(false);}} style={styles.button}>
             <Text style={styles.buttonText}>Cancelar</Text>
             </TouchableOpacity>
           </View>
