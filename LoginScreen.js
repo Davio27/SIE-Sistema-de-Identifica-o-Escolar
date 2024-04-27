@@ -4,12 +4,15 @@ import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 
 
+
+
 const LoginScreen = () => {
   const [nomeAluno, setNomeAluno] = useState('');
   const [rm, setRM] = useState('');
   const [dataNascimento, setDataNascimento] = useState('');
   const navigation = useNavigation();
 
+  // Função para formatar a data de nascimento no formato DD/MM/AAAA
   const formatarDataNascimento = (text) => {
     const cleaned = text.replace(/[^0-9]/g, '');
 
@@ -24,18 +27,21 @@ const LoginScreen = () => {
 
   // Condições de Login
   const handleLogin = () => {
-    // Condição para navegar para a ela do Scanner
-    if (rm === '11111111') {
-      navigation.navigate('LeitorScreen', { nomeUsuario: nomeAluno }); // Navegar para QRScanner se RM for '11111111'
+    // Condição para campos vazios
+    if (!nomeAluno || !rm || !dataNascimento) {
+      Alert.alert('Campos vazios', 'Por favor, preencha todos os campos.');
       return;
     }
     // Condição para navegar para a tel do Admin
-    else if (rm === '00000000' && nomeAluno == 'Paulo Eduardo Hernandes' || nomeAluno == 'paulo eduardo hernandes' || nomeAluno == 'Paulo eduardo hernandes' && dataNascimento == '27/06/2000') {
+    else if (rm === '00000000' && dataNascimento === '27/06/2000' && nomeAluno == 'Paulo Eduardo Hernandes' || nomeAluno == 'paulo eduardo hernandes' 
+    || nomeAluno == 'Paulo eduardo hernandes' || nomeAluno == 'Paulo Eduardo hernandes'
+     || nomeAluno == 'paulo Eduardo hernandes' || nomeAluno == 'paulo eduardo Hernandes') {
       navigation.navigate('CrudScreen', {}); // Navegar para CrudScreen se RM for '00000000'
       return;
     }
-    else if (!nomeAluno || !rm || !dataNascimento) {
-      Alert.alert('Campos vazios', 'Por favor, preencha todos os campos.');
+    // Condição para navegar para a ela do Scanner
+    else if (rm === '11111111') {
+      navigation.navigate('LeitorScreen', { nomeUsuario: nomeAluno }); // Navegar para QRScanner se RM for '11111111'
       return;
     }
     else {
@@ -52,9 +58,9 @@ const LoginScreen = () => {
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
       <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-          <Text >
-                <MaterialIcons name="keyboard-arrow-left" size={54} color="#B22222" />
-          </Text>
+        <Text >
+            <MaterialIcons name="keyboard-arrow-left" size={54} color="#B22222" />
+        </Text>
       </TouchableOpacity>
         <View style={styles.logoContainer}>
           <Image
@@ -62,7 +68,9 @@ const LoginScreen = () => {
             style={styles.logo}
           />
         </View>
+        
         <Text style={styles.title}>Sistema de Identificação Escolar</Text>
+        
         <TextInput
           style={styles.input}
           placeholder="Nome"
@@ -71,14 +79,14 @@ const LoginScreen = () => {
         />
         <TextInput
           style={styles.input}
-          placeholder="RM/RP"
+          placeholder="Registro de entrada"
           value={rm}
           onChangeText={text => setRM(text.replace(/[^0-9]/g, ''))}
           keyboardType="numeric"
         />
         <TextInput
           style={styles.input}
-          placeholder="Data de Nascimento (DD/MM/AAAA)"
+          placeholder="Data de Nascimento(DD/MM/AAAA)"
           value={formatarDataNascimento(dataNascimento)}
           onChangeText={text => setDataNascimento(text)}
           keyboardType="numeric"
@@ -91,6 +99,7 @@ const LoginScreen = () => {
   );
 };
 
+// Estilos
 const styles = StyleSheet.create({
   container: {
     flex: 1,
