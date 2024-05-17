@@ -269,7 +269,7 @@ const confirmarExclusao = (index) => {
                 }
               }}
             />
-            <TouchableOpacity onPress={adicionarAluno} style={styles.button}>
+            <TouchableOpacity onPress={() =>{resetNovoAluno(); adicionarAluno();}} style={styles.button}>
               <Text style={styles.buttonText}>{editandoAluno ? 'Salvar Alterações' : 'Adicionar Aluno'}</Text>
             </TouchableOpacity>
 
