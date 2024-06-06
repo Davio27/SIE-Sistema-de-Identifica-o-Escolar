@@ -1,6 +1,6 @@
 # SIE - Sistema de Identificação Escolar
 
-O SIE é um aplicativo desenvolvido em React Native pelo Expo para identificação de alunos nas extensões de ensino Etec Centro Paula Sousa. Ele permite aos usuários realizar login, gerar um QR-ID para acesso, ler QR codes através da câmera do dispositivo e realizar operações CRUD (Create, Read, Update, Delete) sobre uma lista de alunos.
+O SIE é um aplicativo desenvolvido em React Native pelo Expo para identificação de alunos nas extensões de ensino Etec Centro Paula Sousa. Ele permite aos usuários realizar login, gerar um QR-ID para acesso, ler QR codes através da câmera do dispositivo e realizar operações CRUD (Create, Read, Update, Delete) sobre uma lista de alunos. O APP foi desenvolvido em prol de melhorar o acesso dos alunos de fora segura atraves de uma autenticação. Visando limitar a entrada somente de alunos e professores na escola no horario de aula.
 
 ## Instalação
 
