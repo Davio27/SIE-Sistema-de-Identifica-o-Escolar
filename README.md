@@ -80,6 +80,13 @@ O aplicativo possui uma tela de leitura de QR code que utiliza a câmera do disp
 
 O SIE permite a criação, leitura, atualização e exclusão de alunos cadastrados. Os dados dos alunos são armazenados localmente no dispositivo usando o AsyncStorage.
 
+## Ferramentas de Design Utilizadas
+Para o design das telas do aplicativo, assim como para a criação de ícones e imagens, utilizamos as seguintes ferramentas:
+
+Figma: Utilizado para criar os templates das telas do aplicativo. O Figma é uma ferramenta de design colaborativo baseada na web que permite criar interfaces de usuário de forma intuitiva e compartilhar o trabalho com a equipe.
+
+Canvas: Usado para a criação de ícones e imagens personalizadas para o aplicativo. O Canvas oferece uma interface amigável para a criação de arte digital e gráficos vetoriais, facilitando a produção de elementos visuais consistentes e atraentes para o SIE.
+
 ## Gerenciamento de Projeto com JIRA e Metodologia Scrum
 O projeto SIE foi moldado utilizando o JIRA como ferramenta principal de gerenciamento de projetos e seguindo as práticas ágeis da metodologia Scrum. Aqui estão alguns aspectos chave do processo:
 
