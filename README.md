@@ -80,6 +80,23 @@ O aplicativo possui uma tela de leitura de QR code que utiliza a câmera do disp
 
 O SIE permite a criação, leitura, atualização e exclusão de alunos cadastrados. Os dados dos alunos são armazenados localmente no dispositivo usando o AsyncStorage.
 
+## Gerenciamento de Projeto com JIRA e Metodologia Scrum
+O projeto SIE foi moldado utilizando o JIRA como ferramenta principal de gerenciamento de projetos e seguindo as práticas ágeis da metodologia Scrum. Aqui estão alguns aspectos chave do processo:
+
+Planejamento de Sprints: O desenvolvimento foi dividido em iterações (sprints) de curto prazo, geralmente de duas semanas, onde foram definidas as metas e entregas esperadas para cada sprint.
+
+Backlog de Produto: O JIRA foi utilizado para manter um backlog de produto detalhado, contendo todas as funcionalidades, melhorias e correções planejadas para o SIE. Esses itens foram priorizados de acordo com o valor para o usuário e a complexidade técnica.
+
+Histórias de Usuário e Tarefas: Cada funcionalidade ou melhoria foi quebrada em histórias de usuário menores e tarefas específicas, facilitando o desenvolvimento incremental e o acompanhamento do progresso.
+
+Reuniões Diárias (Daily Standups): Realizadas breves reuniões diárias para sincronização da equipe, onde eram discutidos progressos, impedimentos e próximos passos.
+
+Revisões de Sprint e Retrospectivas: Ao final de cada sprint, eram realizadas reuniões de revisão para demonstração das funcionalidades desenvolvidas e retrospectivas para identificação de melhorias no processo.
+
+Feedback Contínuo e Adaptação: A metodologia Scrum permitiu uma abordagem iterativa e adaptativa, onde feedbacks eram constantemente incorporados ao produto para garantir que as necessidades dos usuários fossem atendidas de forma eficaz.
+
+
+
 ## Bibliotecas Utilizadas
 
 - React Native
